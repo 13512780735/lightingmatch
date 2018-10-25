@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        applicationId 'cn.droidlover.xdroidmvp.demo'
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    annotationProcessor rootProject.ext.dependencies["butterknife-apt"]
+    implementation rootProject.ext.dependencies["avi-loading"]
+    implementation project(":mvp")
+    implementation rootProject.ext.dependencies["fab"]
+    implementation rootProject.ext.dependencies["cardview"]
+   // implementation rootProject.ext.dependencies["design"]
+
+}
