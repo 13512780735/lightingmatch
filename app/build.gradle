@@ -21,11 +21,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor rootProject.ext.dependencies["butterknife-apt"]
     implementation rootProject.ext.dependencies["avi-loading"]
     implementation project(":mvp")
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["cardview"]
-   // implementation rootProject.ext.dependencies["design"]
+    // implementation rootProject.ext.dependencies["design"]
 
 }

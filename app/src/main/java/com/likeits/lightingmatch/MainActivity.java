@@ -8,16 +8,19 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.likeits.lightingmatch.utils.ToastShow;
+import com.likeits.lightingmatch.fragment.SceneFragment;
 import com.likeits.lightingmatch.utils.ToastUtils;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 public class MainActivity extends XActivity {
+    @BindView(R.id.rl_fab)
+    RelativeLayout rlFab;
     @BindView(R.id.menuFab)
     FloatingActionMenu menuFab;
     @BindView(R.id.fab_1)
@@ -51,31 +54,33 @@ public class MainActivity extends XActivity {
         fab5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
-                ToastUtils.showToast(MainActivity.this,"场景");
+                ToastUtils.showToast(MainActivity.this, "场景");
+//                SceneFragment sceneFragment = new SceneFragment();
+//                sceneFragment.show(getSupportFragmentManager(), "场景");
             }
         });
         fab4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
-                ToastUtils.showToast(MainActivity.this,"灯饰");
+                ToastUtils.showToast(MainActivity.this, "灯饰");
             }
         });
         fab3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-                ToastUtils.showToast(MainActivity.this,"购物车");
+                ToastUtils.showToast(MainActivity.this, "购物车");
             }
         });
         fab2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-                ToastUtils.showToast(MainActivity.this,"历史");
+                ToastUtils.showToast(MainActivity.this, "历史");
             }
         });
         fab1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
-                ToastUtils.showToast(MainActivity.this,"帮助");
+                ToastUtils.showToast(MainActivity.this, "帮助");
             }
         });
     }
@@ -106,6 +111,11 @@ public class MainActivity extends XActivity {
             public void onAnimationStart(Animator animation) {
                 menuFab.getMenuIconView().setImageResource(menuFab.isOpened()
                         ? R.mipmap.icon_tools : R.mipmap.icon_up);
+                if (menuFab.isOpened()) {
+                    rlFab.setTranslationX(0);
+                } else {
+                    rlFab.setTranslationX(-190);
+                }
             }
         });
 
