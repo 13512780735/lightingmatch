@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.likeits.lightingmatch.fragment.LightsFragment;
 import com.likeits.lightingmatch.fragment.SceneFragment;
 import com.likeits.lightingmatch.utils.ToastUtils;
 
@@ -33,6 +34,8 @@ public class MainActivity extends XActivity {
     FloatingActionButton fab4;
     @BindView(R.id.fab_5)
     FloatingActionButton fab5;
+    private SceneFragment sceneFragment;
+    private LightsFragment lightsFragment;
 
 
     @Override
@@ -47,6 +50,8 @@ public class MainActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         createCustomAnimation();
+        sceneFragment = new SceneFragment();
+        lightsFragment = new LightsFragment();
         fabOnclick();
     }
 
@@ -55,14 +60,16 @@ public class MainActivity extends XActivity {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
                 ToastUtils.showToast(MainActivity.this, "场景");
-//                SceneFragment sceneFragment = new SceneFragment();
-//                sceneFragment.show(getSupportFragmentManager(), "场景");
+                lightsFragment.dismiss();
+                sceneFragment.show(getSupportFragmentManager(), "场景");
             }
         });
         fab4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
                 ToastUtils.showToast(MainActivity.this, "灯饰");
+                sceneFragment.dismiss();
+                lightsFragment.show(getSupportFragmentManager(), "灯饰");
             }
         });
         fab3.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +121,7 @@ public class MainActivity extends XActivity {
                 if (menuFab.isOpened()) {
                     rlFab.setTranslationX(0);
                 } else {
-                    rlFab.setTranslationX(-190);
+                    rlFab.setTranslationX(-300);
                 }
             }
         });

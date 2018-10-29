@@ -1,12 +1,10 @@
 package com.likeits.lightingmatch.fragment;
 
 
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -16,20 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 import com.likeits.lightingmatch.R;
+import com.likeits.lightingmatch.adapter.ContainerViewPagerAdapter;
+import com.likeits.lightingmatch.view.NoScrollViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SceneFragment extends DialogFragment {
+public class ContainerFragment extends DialogFragment {
 
+
+    private NoScrollViewPager mViewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scene, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_container, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         initStatusBar();
         initUI(view);
@@ -53,7 +59,7 @@ public class SceneFragment extends DialogFragment {
         Window win = getDialog().getWindow();
 
         // 一定要设置Background，如果不设置，window属性设置无效
-         win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -68,7 +74,11 @@ public class SceneFragment extends DialogFragment {
     }
 
     private void initUI(View view) {
-
+        mViewPager = view.findViewById(R.id.viewpager);
+        List<Fragment> mfragments = new ArrayList<Fragment>();
+        mfragments.add(new SceneFragment());
+        mfragments.add(new LightsFragment());
+        mViewPager.setAdapter(new ContainerViewPagerAdapter(getChildFragmentManager(), mfragments));
     }
 
 }
