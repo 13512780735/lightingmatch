@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.likeits.lightingmatch.fragment.CartFragment;
+import com.likeits.lightingmatch.fragment.ContainerFragment;
 import com.likeits.lightingmatch.fragment.LightsFragment;
 import com.likeits.lightingmatch.fragment.SceneFragment;
 import com.likeits.lightingmatch.utils.ToastUtils;
@@ -34,8 +36,8 @@ public class MainActivity extends XActivity {
     FloatingActionButton fab4;
     @BindView(R.id.fab_5)
     FloatingActionButton fab5;
-    private SceneFragment sceneFragment;
-    private LightsFragment lightsFragment;
+    private ContainerFragment containerFragment;
+    private Bundle bundle;
 
 
     @Override
@@ -50,8 +52,12 @@ public class MainActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         createCustomAnimation();
-        sceneFragment = new SceneFragment();
-        lightsFragment = new LightsFragment();
+//        fab1.setOnClickListener(this);
+//        fab2.setOnClickListener(this);
+//        fab3.setOnClickListener(this);
+//        fab4.setOnClickListener(this);
+//        fab5.setOnClickListener(this);
+
         fabOnclick();
     }
 
@@ -60,36 +66,71 @@ public class MainActivity extends XActivity {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
                 ToastUtils.showToast(MainActivity.this, "场景");
-                lightsFragment.dismiss();
-                sceneFragment.show(getSupportFragmentManager(), "场景");
+//                if (containerFragment != null) {
+//                    containerFragment.dismiss();
+//                }
+                containerFragment = new ContainerFragment();
+//                bundle = new Bundle();
+//
+//                bundle.putInt("flag", 1);
+//                containerFragment.setArguments(bundle);
+                containerFragment.show(getSupportFragmentManager(), "1");
             }
         });
         fab4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
                 ToastUtils.showToast(MainActivity.this, "灯饰");
-                sceneFragment.dismiss();
-                lightsFragment.show(getSupportFragmentManager(), "灯饰");
+                containerFragment = new ContainerFragment();
+//                bundle = new Bundle();
+//                bundle.putInt("flag", 2);
+//                containerFragment.setArguments(bundle);
+                containerFragment.show(getSupportFragmentManager(), "2");
             }
         });
         fab3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
                 ToastUtils.showToast(MainActivity.this, "购物车");
+                if (containerFragment != null) {
+                    containerFragment.dismiss();
+                }
+                containerFragment = new ContainerFragment();
+                bundle = new Bundle();
+                bundle.putInt("flag", 1);
+                containerFragment.setArguments(bundle);
+                containerFragment.show(getSupportFragmentManager(), "场景");
             }
         });
         fab2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
                 ToastUtils.showToast(MainActivity.this, "历史");
+                if (containerFragment != null) {
+                    containerFragment.dismiss();
+                }
+                containerFragment = new ContainerFragment();
+                bundle = new Bundle();
+                bundle.putInt("flag", 2);
+                containerFragment.setArguments(bundle);
+                containerFragment.show(getSupportFragmentManager(), "灯饰");
             }
         });
         fab1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
                 ToastUtils.showToast(MainActivity.this, "帮助");
+                if (containerFragment != null) {
+                    containerFragment.dismiss();
+                }
+                containerFragment = new ContainerFragment();
+                bundle = new Bundle();
+                bundle.putInt("flag", 1);
+                containerFragment.setArguments(bundle);
+                containerFragment.show(getSupportFragmentManager(), "场景");
             }
         });
+
     }
 
 
@@ -139,4 +180,20 @@ public class MainActivity extends XActivity {
         return null;
     }
 
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()){
+//            case R.id.fab_1:
+//                break;
+//            case R.id.fab_2:
+//                break;
+//            case R.id.fab_3:
+//                break;
+//            case R.id.fab_4:
+//                break;
+//            case R.id.fab_5:
+//                break;
+//
+//        }
+//    }
 }

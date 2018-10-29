@@ -21,14 +21,14 @@ import com.likeits.lightingmatch.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LightsFragment extends DialogFragment {
+public class LightsFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lights, container, false);
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         initStatusBar();
         initUI(view);
         return view;
@@ -45,25 +45,6 @@ public class LightsFragment extends DialogFragment {
         getActivity().getWindow().setFlags(flag_translucent_status, flag_translucent_status);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Window win = getDialog().getWindow();
-
-        // 一定要设置Background，如果不设置，window属性设置无效
-        win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        WindowManager.LayoutParams params = win.getAttributes();
-        params.dimAmount = 0f;
-        params.gravity = Gravity.RIGHT;
-        // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
-        params.width = 300;
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        win.setAttributes(params);
-    }
 
     private void initUI(View view) {
 

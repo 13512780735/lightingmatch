@@ -16,36 +16,21 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.likeits.lightingmatch.R;
-import com.likeits.lightingmatch.adapter.ContainerViewPagerAdapter;
-import com.likeits.lightingmatch.view.NoScrollViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContainerFragment extends DialogFragment {
+public class CartFragment extends DialogFragment {
 
-
-    private NoScrollViewPager mViewPager;
-    private int data01;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_container, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getDialog().setCanceledOnTouchOutside(false);
         initStatusBar();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            data01 = bundle.getInt("flag");
-        }
-       initUI(view);
-
         return view;
     }
 
@@ -78,19 +63,6 @@ public class ContainerFragment extends DialogFragment {
         params.width = 300;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         win.setAttributes(params);
-    }
-
-    private void initUI(View view) {
-      mViewPager = view.findViewById(R.id.viewpager);
-        List<Fragment> mfragments = new ArrayList<Fragment>();
-        mfragments.add(new SceneFragment());
-        mfragments.add(new LightsFragment());
-        mViewPager.setAdapter(new ContainerViewPagerAdapter(getChildFragmentManager(), mfragments));
-        if (data01 == 1) {
-            mViewPager.setCurrentItem(0);
-        } else if (data01 == 2) {
-            mViewPager.setCurrentItem(1);
-        }
     }
 
 }

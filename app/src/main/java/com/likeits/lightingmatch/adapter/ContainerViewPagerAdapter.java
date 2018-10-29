@@ -30,7 +30,7 @@ public class ContainerViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return mfragments.size();
     }
 
     @Override
