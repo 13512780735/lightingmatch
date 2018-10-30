@@ -16,22 +16,23 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.likeits.lightingmatch.R;
+import com.likeits.lightingmatch.base.BaseFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LightsFragment extends Fragment {
+public class LightsFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lights, container, false);
+    protected int setContentView() {
+        return R.layout.fragment_lights;
+    }
 
+    @Override
+    protected void lazyLoad() {
         initStatusBar();
-        initUI(view);
-        return view;
     }
 
     /**
@@ -45,9 +46,5 @@ public class LightsFragment extends Fragment {
         getActivity().getWindow().setFlags(flag_translucent_status, flag_translucent_status);
     }
 
-
-    private void initUI(View view) {
-
-    }
 
 }

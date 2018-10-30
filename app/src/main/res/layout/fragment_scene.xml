@@ -3,18 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/x_red"
-    android:layout_alignParentRight="true"
     tools:context="com.likeits.lightingmatch.fragment.SceneFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
-        android:id="@+id/rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/x_yellow"
-        android:layout_alignParentRight="true">
 
-        <TextView
+        <Button
+            android:id="@+id/tv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -22,5 +16,4 @@
             android:text="test"
             android:textColor="@color/x_red" />
 
-    </RelativeLayout>
 </RelativeLayout>

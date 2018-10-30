@@ -16,22 +16,23 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.likeits.lightingmatch.R;
+import com.likeits.lightingmatch.base.BaseFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CartFragment extends DialogFragment {
+public class CartFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+    protected int setContentView() {
+        return R.layout.fragment_cart;
+    }
+
+    @Override
+    protected void lazyLoad() {
         initStatusBar();
-        return view;
     }
 
     /**
@@ -45,24 +46,5 @@ public class CartFragment extends DialogFragment {
         getActivity().getWindow().setFlags(flag_translucent_status, flag_translucent_status);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Window win = getDialog().getWindow();
-
-        // 一定要设置Background，如果不设置，window属性设置无效
-        win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        WindowManager.LayoutParams params = win.getAttributes();
-        params.dimAmount = 0f;
-        params.gravity = Gravity.RIGHT;
-        // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
-        params.width = 300;
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        win.setAttributes(params);
-    }
 
 }

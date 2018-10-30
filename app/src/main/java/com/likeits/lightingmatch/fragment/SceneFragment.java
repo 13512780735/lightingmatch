@@ -1,62 +1,55 @@
 package com.likeits.lightingmatch.fragment;
 
 
-import android.os.Build;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.likeits.lightingmatch.R;
+import com.likeits.lightingmatch.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SceneFragment extends Fragment {
+public class SceneFragment extends BaseFragment {
+
+    private CallBackValue callBackValue;
+    private Button tv;
+
+    @Override
+    public void onAttach(Activity activity) {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        //当前fragment从activity重写了回调接口  得到接口的实例化对象
+        callBackValue = (CallBackValue) getActivity();
+    }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scene, container, false);
-        //initUI(view);
-        return view;
+    protected int setContentView() {
+        return R.layout.fragment_scene;
     }
 
-    /**
-     * 初始化沉浸式状态栏
-     */
-    private void initStatusBar() {
-        //设置是否沉浸式
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        int flag_translucent_status = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        //透明状态栏
-        getActivity().getWindow().setFlags(flag_translucent_status, flag_translucent_status);
+    @Override
+    protected void lazyLoad() {
+        tv = findViewById(R.id.tv_test);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"点击了",Toast.LENGTH_SHORT).show();
+                callBackValue.SendMessageValue("1");
+            }
+        });
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        // 一定要设置Background，如果不设置，window属性设置无效
-//         win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-//
-//        WindowManager.LayoutParams params = win.getAttributes();
-//        params.dimAmount = 0f;
-//        params.gravity = Gravity.RIGHT;
-//        // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
-//        params.width = 300;
-//        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-//        win.setAttributes(params);
-//    }
-
-    private void initUI(View view) {
-
+    //定义一个回调接口
+    public interface CallBackValue {
+        void SendMessageValue(String strValue);
     }
-
 }
