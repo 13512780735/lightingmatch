@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fr_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/icon_scene_background"
-    tools:context=".MainActivity">
+    android:background="@mipmap/icon_scene_background">
 
     <RelativeLayout
+        android:id="@+id/rl_right"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
+
 
         <com.likeits.lightingmatch.uilib.DragDynamicView
             android:id="@+id/drag_control_layout"
@@ -44,6 +46,7 @@
 
         </RelativeLayout>
 
+
         <RelativeLayout
             android:id="@+id/rl_fab"
             android:layout_width="wrap_content"
@@ -64,7 +67,7 @@
                 fab:menu_colorNormal="#00000000"
                 fab:menu_colorPressed="#00000000"
                 fab:menu_colorRipple="#00000000"
-                fab:menu_fab_size="normal"
+                fab:menu_fab_size="mini"
                 fab:menu_icon="@mipmap/icon_tools"
                 fab:menu_labels_colorNormal="#00000000"
                 fab:menu_labels_colorPressed="#00000000"
@@ -74,7 +77,6 @@
                 fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
                 fab:menu_labels_margin="0dp"
                 fab:menu_labels_maxLines="-1"
-                fab:menu_labels_padding="8dp"
                 fab:menu_labels_position="left"
                 fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
                 fab:menu_labels_showShadow="true"
@@ -93,6 +95,7 @@
                     android:id="@+id/fab_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:src="@mipmap/icon_help"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -103,6 +106,7 @@
                     android:id="@+id/fab_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:src="@mipmap/icon_history"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -113,6 +117,7 @@
                     android:id="@+id/fab_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:src="@mipmap/icon_cart"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -123,6 +128,7 @@
                     android:id="@+id/fab_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:src="@mipmap/icon_lights"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -133,6 +139,7 @@
                     android:id="@+id/fab_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:src="@mipmap/icon_scene"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"

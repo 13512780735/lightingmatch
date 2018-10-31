@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -51,6 +52,8 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     FloatingActionButton fab5;
     @BindView(R.id.fl_content)
     RelativeLayout fl_content;
+    @BindView(R.id.rl_right)
+    RelativeLayout rl_right;
     @BindView(R.id.drag_control_layout)
     DragDynamicView mDragControlView;
 
@@ -64,6 +67,8 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     private HelpFragment helpFragment;
     private CloseImageView closeView;
     private DragImageView dragView;
+    private CenterView centerView;
+    private ImageView centerImageView;
 
 
     @Override
@@ -84,21 +89,60 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         fabOnclick();
-//        mDragControlView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                closeView.setVisibility(View.VISIBLE);
-//                dragView.setVisibility(View.VISIBLE);
-//            }
-//        });
-//        mDragControlView.setOnOutSideClickListener(new DragDynamicView.OnOutSideClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                closeView.setVisibility(View.GONE);
-//                dragView.setVisibility(View.GONE);
-//            }
-//        });
+        mDragControlView.setOnOutSideClickListener(new DragDynamicView.OnOutSideClickListener() {
+            @Override
+            public void onClick(View view) {
+                fl_content.setVisibility(View.GONE);
+                if (view == centerView) {
+                    centerView.setIsEdit(true);
+                    //mDragControlView.refreshView();
+//                    mDragControlView.addView(closeView);
+//                    mDragControlView.addView(dragView);
+//                    for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
+//                        IDragView view01 = mDragControlView.getAllViews().get(i);
+//                        if (view01 instanceof CloseImageView) {
+//                            ((CloseImageView) view01).setVisibility(View.VISIBLE);
+//                        }
+//                        if (view01 instanceof DragImageView) {
+//                            ((DragImageView) view01).setVisibility(View.VISIBLE);
+//                        }
+//                    }
+                } else {
+                    for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
+                        IDragView view01 = mDragControlView.getAllViews().get(i);
+                        if (view01 instanceof CloseImageView) {
+                            ((CloseImageView) view01).setVisibility(View.GONE);
+                        }
+                        if (view01 instanceof DragImageView) {
+                            ((DragImageView) view01).setVisibility(View.GONE);
+                        }
+                    }
+                }
+//                else{
+//                    centerImageView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            ViewParent parent = v.getParent();
+//                            if (parent instanceof CenterView) {
+//                                CenterView parentView = (CenterView) parent;
+//                                parentView.setIsEdit(true);
+//                                if (mDragControlView != null) {
+//                                    // mDragControlView.refreshView();
+//                                    dragView.setVisibility(View.VISIBLE);
+//                                    closeView.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                        }
+//                    });
+//                }
+            }
+        });
+        mDragControlView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"888",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -258,16 +302,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         return null;
     }
 
-    @Override
-    public void SendMessageValue(String strValue) {
-        // ToastUtils.showToast(context,"点击了");
-        if ("1".equals(strValue)) {
-            addDynamicView();
-        } else {
-            setDragViewAllEnEdit();
-        }
-    }
-
 
     private void addDynamicView() {
         closeView = (CloseImageView) getLayoutInflater().inflate(R.layout.story_close_view, null);
@@ -287,22 +321,46 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         dragView.setImageResource(R.mipmap.icon_zoom);
         dragView.setIndex(String.valueOf(mDragControlView.LEVELS));
         dragView.setVisibility(View.INVISIBLE);
-        final CenterView centerView = (CenterView) getLayoutInflater().inflate(R.layout.story_center_view, null);
-        ImageView centerImageView = (ImageView) centerView.findViewById(R.id.center_pic);
+        centerView = (CenterView) getLayoutInflater().inflate(R.layout.story_center_view, null);
+        centerImageView = (ImageView) centerView.findViewById(R.id.center_pic);
         centerImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            //    Toast.makeText(context,"123",Toast.LENGTH_SHORT).show();
+//                dragView.setVisibility(View.VISIBLE);
+//                closeView.setVisibility(View.VISIBLE);
                 ViewParent parent = v.getParent();
                 if (parent instanceof CenterView) {
                     CenterView parentView = (CenterView) parent;
                     parentView.setIsEdit(true);
                     if (mDragControlView != null) {
-                        mDragControlView.refreshView();
+                       mDragControlView.refreshView();
+//                        dragView.setVisibility(View.VISIBLE);
+//                        closeView.setVisibility(View.VISIBLE);
                     }
                 }
 
             }
         });
+
+//        centerImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context,"123",Toast.LENGTH_SHORT).show();
+//                dragView.setVisibility(View.VISIBLE);
+//                closeView.setVisibility(View.VISIBLE);
+//                ViewParent parent = v.getParent();
+//                if (parent instanceof CenterView) {
+//                    CenterView parentView = (CenterView) parent;
+//                    parentView.setIsEdit(true);
+//                    if (mDragControlView != null) {
+//                       // mDragControlView.refreshView();
+//
+//                    }
+//                }
+//
+//            }
+//        });
         centerView.setIsEdit(true);
         centerView.setBitmap(null);
         centerImageView.setImageResource(R.mipmap.icon_ceiling_lamp01);
@@ -317,7 +375,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         if (mDragControlView != null && mDragControlView.getAllViews() != null) {
             for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
                 IDragView view = mDragControlView.getAllViews().get(i);
-
+                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
                 if (view instanceof ICenterView) {
                     ((ICenterView) view).setIsEdit(false);
                 }
@@ -326,27 +384,20 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         }
     }
 
-    //
+    /**
+     * 灯饰回调
+     *
+     * @param strValue
+     */
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            View view = getCurrentFocus();
-            if (view != fl_content) {
-                fl_content.setVisibility(View.GONE);
-//                if (closeView != null || dragView != null) {
-//                    closeView.setVisibility(View.INVISIBLE);
-//                    dragView.setVisibility(View.INVISIBLE);
-//                }
-            }
+    public void SendMessageValue(String strValue) {
+        // ToastUtils.showToast(context,"点击了");
+        if ("1".equals(strValue)) {
+            addDynamicView();
+            fl_content.setVisibility(View.GONE);
+        }else{
+            setDragViewAllEnEdit();
         }
 
-        return super.dispatchTouchEvent(ev);
     }
-//
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        View view = getCurrentFocus();
-//        fl_content.setVisibility(View.GONE);
-//        return true;
-//    }
 }
