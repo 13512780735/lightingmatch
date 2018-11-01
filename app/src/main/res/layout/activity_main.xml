@@ -13,13 +13,21 @@
         android:descendantFocusability="blocksDescendants">
 
 
-        <com.likeits.lightingmatch.uilib.DragDynamicView
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+
+        <com.likeits.lightingmatch.view.uilib.DragDynamicView
             android:id="@+id/drag_control_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:rotation="180"
             android:rotationX="180"
-            android:rotationY="180"></com.likeits.lightingmatch.uilib.DragDynamicView>
+            android:rotationY="180"></com.likeits.lightingmatch.view.uilib.DragDynamicView>
 
         <RelativeLayout
             android:id="@+id/frameLayout_bottom"

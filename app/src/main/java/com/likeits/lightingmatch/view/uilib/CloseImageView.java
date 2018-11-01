@@ -1,9 +1,9 @@
-package com.likeits.lightingmatch.uilib;
+package com.likeits.lightingmatch.view.uilib;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.likeits.lightingmatch.uilib.base.BaseImageView;
+import com.likeits.lightingmatch.view.uilib.base.BaseImageView;
 
 
 /**

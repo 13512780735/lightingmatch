@@ -1,4 +1,4 @@
-package com.likeits.lightingmatch.util;
+package com.likeits.lightingmatch.utils;
 
 
 

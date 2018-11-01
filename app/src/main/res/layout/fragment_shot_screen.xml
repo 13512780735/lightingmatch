@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:context="com.likeits.lightingmatch.fragment.ShotScreenFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+        <ImageView
+            android:id="@+id/iv_shotScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/width50"
+            android:layout_marginRight="@dimen/width55"
+            android:layout_marginLeft="@dimen/width55"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/color_white"
+                android:gravity="center"
+                android:text="取消" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/fab_bground"></View>
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/color_white"
+                android:gravity="center"
+                android:text="保存" />
+
+
+    </LinearLayout>
+</LinearLayout>

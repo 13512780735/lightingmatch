@@ -1,4 +1,4 @@
-package com.likeits.lightingmatch.uilib;
+package com.likeits.lightingmatch.view.uilib;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,8 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.likeits.lightingmatch.uilib.base.ICenterView;
-
+import com.likeits.lightingmatch.view.uilib.base.ICenterView;
 
 
 /**

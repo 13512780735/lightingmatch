@@ -4,7 +4,7 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        applicationId 'cn.droidlover.xdroidmvp.demo'
+        applicationId 'com.likeits.lightingmatch'
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
@@ -20,13 +20,16 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor rootProject.ext.dependencies["butterknife-apt"]
+    implementation rootProject.ext.dependencies["actionsheet"]
+    implementation rootProject.ext.dependencies["easypermissions"]
     implementation rootProject.ext.dependencies["avi-loading"]
-    implementation project(":mvp")
+    implementation project(':mvp')
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["cardview"]
     // implementation rootProject.ext.dependencies["design"]
-
+    implementation files('libs/AndroidScreenCap.jar')
 }

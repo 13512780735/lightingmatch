@@ -1,4 +1,4 @@
-package com.likeits.lightingmatch.uilib.base;
+package com.likeits.lightingmatch.view.uilib.base;
 
 public interface IDragView {
 	int TAG_DRAG = 0x886;

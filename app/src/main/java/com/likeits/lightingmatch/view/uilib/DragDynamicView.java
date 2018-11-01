@@ -1,4 +1,4 @@
-package com.likeits.lightingmatch.uilib;
+package com.likeits.lightingmatch.view.uilib;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,9 +11,9 @@ import android.view.ViewConfiguration;
 import android.widget.RelativeLayout;
 
 import com.likeits.lightingmatch.R;
-import com.likeits.lightingmatch.uilib.base.ICenterView;
-import com.likeits.lightingmatch.uilib.base.IDragView;
-import com.likeits.lightingmatch.util.RecordUtil;
+import com.likeits.lightingmatch.view.uilib.base.ICenterView;
+import com.likeits.lightingmatch.view.uilib.base.IDragView;
+import com.likeits.lightingmatch.utils.RecordUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

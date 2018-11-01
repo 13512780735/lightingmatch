@@ -1,4 +1,4 @@
-package com.likeits.lightingmatch.uilib.base;
+package com.likeits.lightingmatch.view.uilib.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;

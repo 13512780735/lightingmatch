@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.likeits.lightingmatch.uilib.CenterView
+<com.likeits.lightingmatch.view.uilib.CenterView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -11,6 +11,6 @@
         android:scaleType="centerCrop"
         android:layout_width="@dimen/width100"
         android:layout_height="@dimen/width100"/>
-</com.likeits.lightingmatch.uilib.CenterView>
+</com.likeits.lightingmatch.view.uilib.CenterView>
     
 
