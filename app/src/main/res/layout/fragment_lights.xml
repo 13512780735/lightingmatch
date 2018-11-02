@@ -1,11 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#95000000"
+    android:orientation="vertical"
     tools:context="com.likeits.lightingmatch.fragment.LightsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dip_xlarge"
+        android:layout_marginLeft="@dimen/dip_normal"
+        android:layout_marginRight="@dimen/dip_normal"
 
-</RelativeLayout>
+        android:layout_marginTop="@dimen/dip_xlarge"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/circle_corner_button_selector"
+            android:button="@null"
+            android:checked="true"
+            android:drawableRight="@drawable/circle_corner_image_selector"
+            android:gravity="center"
+            android:text="灯饰类别"
+            android:textColor="@color/radiobutton_textcolor"
+            android:textSize="@dimen/txt_11" />
+
+        <RadioButton
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_normal"
+            android:layout_weight="1"
+            android:background="@drawable/circle_corner_button_selector"
+            android:button="@null"
+            android:drawableRight="@drawable/circle_corner_image_selector"
+            android:gravity="center"
+            android:text="适合房型"
+            android:textColor="@color/radiobutton_textcolor"
+            android:textSize="@dimen/txt_11" />
+
+        <RadioButton
+            android:id="@+id/btn3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_normal"
+            android:layout_weight="1"
+            android:background="@drawable/circle_corner_button_selector"
+            android:button="@null"
+            android:drawableRight="@drawable/circle_corner_image_selector"
+            android:gravity="center"
+            android:text="适合风格"
+            android:textColor="@color/radiobutton_textcolor"
+            android:textSize="@dimen/txt_11" />
+
+    </RadioGroup>
+
+    <scut.carson_ho.searchview.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:layout_marginLeft="@dimen/dip_normal"
+        app:searchBlockHeight="55"
+        app:textColorSearch="#ffffff"
+        app:textHintSearch="输入搜索关键字"
+        app:textSizeSearch="5dp" />
+</LinearLayout>
+
