@@ -6,17 +6,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -25,17 +25,18 @@ import com.likeits.lightingmatch.fragment.HelpFragment;
 import com.likeits.lightingmatch.fragment.HistoryFragment;
 import com.likeits.lightingmatch.fragment.LightsFragment;
 import com.likeits.lightingmatch.fragment.SceneFragment;
-import com.likeits.lightingmatch.uilib.CenterView;
-import com.likeits.lightingmatch.uilib.CloseImageView;
-import com.likeits.lightingmatch.uilib.DragDynamicView;
-import com.likeits.lightingmatch.uilib.DragImageView;
-import com.likeits.lightingmatch.uilib.base.ICenterView;
-import com.likeits.lightingmatch.uilib.base.IDragView;
+import com.likeits.lightingmatch.fragment.ShotScreenFragment;
+import com.likeits.lightingmatch.view.uilib.CenterView;
+import com.likeits.lightingmatch.view.uilib.CloseImageView;
+import com.likeits.lightingmatch.view.uilib.DragDynamicView;
+import com.likeits.lightingmatch.view.uilib.DragImageView;
+import com.likeits.lightingmatch.view.uilib.base.ICenterView;
+import com.likeits.lightingmatch.view.uilib.base.IDragView;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
-public class MainActivity extends XActivity implements SceneFragment.CallBackValue {
+public class MainActivity extends XActivity implements SceneFragment.CallBackValue, DragDynamicView.OnOutSideClickListener, View.OnClickListener {
     @BindView(R.id.rl_fab)
     RelativeLayout rlFab;
     @BindView(R.id.menuFab)
@@ -56,6 +57,14 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     RelativeLayout rl_right;
     @BindView(R.id.drag_control_layout)
     DragDynamicView mDragControlView;
+    @BindView(R.id.tv_back)
+    TextView tvBack;
+    @BindView(R.id.iv_save)
+    ImageView ivSave;
+    @BindView(R.id.iv_camera)
+    ImageView ivCamera;
+    @BindView(R.id.frameLayout_bottom)
+    RelativeLayout flBottom;
 
     private SceneFragment sceneFragment;
     private Bundle bundle;
@@ -65,10 +74,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     private CartFragment cartFragment;
     private HistoryFragment historyFragment;
     private HelpFragment helpFragment;
-    private CloseImageView closeView;
-    private DragImageView dragView;
-    private CenterView centerView;
-    private ImageView centerImageView;
 
 
     @Override
@@ -81,6 +86,10 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        ivSave.setOnClickListener(this);
+        tvBack.setOnClickListener(this);
+        ivCamera.setOnClickListener(this);
+        mDragControlView.setOnOutSideClickListener(this);
         createCustomAnimation();
         RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) fl_content.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
         WindowManager wManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -89,60 +98,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         fabOnclick();
-        mDragControlView.setOnOutSideClickListener(new DragDynamicView.OnOutSideClickListener() {
-            @Override
-            public void onClick(View view) {
-                fl_content.setVisibility(View.GONE);
-                if (view == centerView) {
-                    centerView.setIsEdit(true);
-                    //mDragControlView.refreshView();
-//                    mDragControlView.addView(closeView);
-//                    mDragControlView.addView(dragView);
-//                    for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
-//                        IDragView view01 = mDragControlView.getAllViews().get(i);
-//                        if (view01 instanceof CloseImageView) {
-//                            ((CloseImageView) view01).setVisibility(View.VISIBLE);
-//                        }
-//                        if (view01 instanceof DragImageView) {
-//                            ((DragImageView) view01).setVisibility(View.VISIBLE);
-//                        }
-//                    }
-                } else {
-                    for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
-                        IDragView view01 = mDragControlView.getAllViews().get(i);
-                        if (view01 instanceof CloseImageView) {
-                            ((CloseImageView) view01).setVisibility(View.GONE);
-                        }
-                        if (view01 instanceof DragImageView) {
-                            ((DragImageView) view01).setVisibility(View.GONE);
-                        }
-                    }
-                }
-//                else{
-//                    centerImageView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            ViewParent parent = v.getParent();
-//                            if (parent instanceof CenterView) {
-//                                CenterView parentView = (CenterView) parent;
-//                                parentView.setIsEdit(true);
-//                                if (mDragControlView != null) {
-//                                    // mDragControlView.refreshView();
-//                                    dragView.setVisibility(View.VISIBLE);
-//                                    closeView.setVisibility(View.VISIBLE);
-//                                }
-//                            }
-//                        }
-//                    });
-//                }
-            }
-        });
-        mDragControlView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,"888",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
@@ -304,10 +259,9 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
 
 
     private void addDynamicView() {
-        closeView = (CloseImageView) getLayoutInflater().inflate(R.layout.story_close_view, null);
+        CloseImageView closeView = (CloseImageView) getLayoutInflater().inflate(R.layout.story_close_view, null);
         closeView.setImageResource(R.mipmap.icon_close);
         closeView.setIndex(String.valueOf(mDragControlView.LEVELS));
-        closeView.setVisibility(View.INVISIBLE);
         closeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -317,50 +271,25 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
 
             }
         });
-        dragView = (DragImageView) getLayoutInflater().inflate(R.layout.story_drag_view, null);
+        DragImageView dragView = (DragImageView) getLayoutInflater().inflate(R.layout.story_drag_view, null);
         dragView.setImageResource(R.mipmap.icon_zoom);
         dragView.setIndex(String.valueOf(mDragControlView.LEVELS));
-        dragView.setVisibility(View.INVISIBLE);
-        centerView = (CenterView) getLayoutInflater().inflate(R.layout.story_center_view, null);
-        centerImageView = (ImageView) centerView.findViewById(R.id.center_pic);
+        CenterView centerView = (CenterView) getLayoutInflater().inflate(R.layout.story_center_view, null);
+        ImageView centerImageView = (ImageView) centerView.findViewById(R.id.center_pic);
         centerImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Toast.makeText(context,"123",Toast.LENGTH_SHORT).show();
-//                dragView.setVisibility(View.VISIBLE);
-//                closeView.setVisibility(View.VISIBLE);
                 ViewParent parent = v.getParent();
                 if (parent instanceof CenterView) {
                     CenterView parentView = (CenterView) parent;
                     parentView.setIsEdit(true);
                     if (mDragControlView != null) {
-                       mDragControlView.refreshView();
-//                        dragView.setVisibility(View.VISIBLE);
-//                        closeView.setVisibility(View.VISIBLE);
+                        mDragControlView.refreshView();
                     }
                 }
 
             }
         });
-
-//        centerImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context,"123",Toast.LENGTH_SHORT).show();
-//                dragView.setVisibility(View.VISIBLE);
-//                closeView.setVisibility(View.VISIBLE);
-//                ViewParent parent = v.getParent();
-//                if (parent instanceof CenterView) {
-//                    CenterView parentView = (CenterView) parent;
-//                    parentView.setIsEdit(true);
-//                    if (mDragControlView != null) {
-//                       // mDragControlView.refreshView();
-//
-//                    }
-//                }
-//
-//            }
-//        });
         centerView.setIsEdit(true);
         centerView.setBitmap(null);
         centerImageView.setImageResource(R.mipmap.icon_ceiling_lamp01);
@@ -375,7 +304,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         if (mDragControlView != null && mDragControlView.getAllViews() != null) {
             for (int i = 0; i < mDragControlView.getAllViews().size(); i++) {
                 IDragView view = mDragControlView.getAllViews().get(i);
-                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
                 if (view instanceof ICenterView) {
                     ((ICenterView) view).setIsEdit(false);
                 }
@@ -392,12 +320,43 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     @Override
     public void SendMessageValue(String strValue) {
         // ToastUtils.showToast(context,"点击了");
-        if ("1".equals(strValue)) {
+        tvBack.performClick();
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == tvBack) {
             addDynamicView();
             fl_content.setVisibility(View.GONE);
-        }else{
+        } else {
             setDragViewAllEnEdit();
+            fl_content.setVisibility(View.GONE);
         }
+        if (view == ivSave) {
+            getWindow().getDecorView().setDrawingCacheEnabled(false);
+            flBottom.setVisibility(View.GONE);
+            rlFab.setVisibility(View.GONE);
+            showDialog(captureScreen());
+            flBottom.setVisibility(View.VISIBLE);
+            rlFab.setVisibility(View.VISIBLE);
+        }
+        if(view==ivCamera){
 
+        }
+    }
+
+    private void showDialog(Bitmap bitmap) {
+        ShotScreenFragment shotScreenFragment = new ShotScreenFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("bitmap", bitmap);
+        shotScreenFragment.setArguments(bundle);
+        shotScreenFragment.show(getSupportFragmentManager(), "shot");
+    }
+
+    public Bitmap captureScreen() {
+        getWindow().getDecorView().setDrawingCacheEnabled(true);
+        Bitmap bmp = getWindow().getDecorView().getDrawingCache();
+        return bmp;
     }
 }
