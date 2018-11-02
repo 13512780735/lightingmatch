@@ -5,38 +5,59 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.guoqi.actionsheet.ActionSheet;
 import com.likeits.lightingmatch.fragment.CartFragment;
 import com.likeits.lightingmatch.fragment.HelpFragment;
 import com.likeits.lightingmatch.fragment.HistoryFragment;
 import com.likeits.lightingmatch.fragment.LightsFragment;
 import com.likeits.lightingmatch.fragment.SceneFragment;
 import com.likeits.lightingmatch.fragment.ShotScreenFragment;
+import com.likeits.lightingmatch.interfac.onDataLightsListener;
+import com.likeits.lightingmatch.utils.photo.PhotoUtils;
 import com.likeits.lightingmatch.view.uilib.CenterView;
 import com.likeits.lightingmatch.view.uilib.CloseImageView;
 import com.likeits.lightingmatch.view.uilib.DragDynamicView;
 import com.likeits.lightingmatch.view.uilib.DragImageView;
 import com.likeits.lightingmatch.view.uilib.base.ICenterView;
 import com.likeits.lightingmatch.view.uilib.base.IDragView;
+import com.orhanobut.logger.Logger;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.mvp.XActivity;
+import butterknife.ButterKnife;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends XActivity implements SceneFragment.CallBackValue, DragDynamicView.OnOutSideClickListener, View.OnClickListener {
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+public class MainActivity extends AppCompatActivity implements onDataLightsListener, DragDynamicView.OnOutSideClickListener, View.OnClickListener , ActionSheet.OnActionSheetSelected, EasyPermissions.PermissionCallbacks {
+    @BindView(R.id.fr_screen)
+    FrameLayout frScreen;
     @BindView(R.id.rl_fab)
     RelativeLayout rlFab;
     @BindView(R.id.menuFab)
@@ -75,6 +96,34 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
     private HistoryFragment historyFragment;
     private HelpFragment helpFragment;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        ivSave.setOnClickListener(this);
+        tvBack.setOnClickListener(this);
+        ivCamera.setOnClickListener(this);
+        mDragControlView.setOnOutSideClickListener(this);
+        createCustomAnimation();
+        RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) fl_content.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+        WindowManager wManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        linearParams.width = wManager.getDefaultDisplay().getWidth() / 3+80;// 控件的宽强制设成30
+        fl_content.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        fabOnclick();
+        PhotoUtils.getInstance().init(this, true, new PhotoUtils.OnSelectListener() {
+            @Override
+            public void onFinish(File outputFile, Uri outputUri) {
+                // 4、当拍照或从图库选取图片成功后回调
+                // mTvPath.setText(outputFile.getAbsolutePath());
+                frScreen.setBackgroundDrawable(Drawable.createFromPath(outputUri.getPath()));
+               // frScreen.setBackground(getResources().getDrawable(R.mipmap.icon_scene_background01));
+                Logger.d("点击执行");
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -82,22 +131,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
         super.onResume();
-    }
-
-    @Override
-    public void initData(Bundle savedInstanceState) {
-        ivSave.setOnClickListener(this);
-        tvBack.setOnClickListener(this);
-        ivCamera.setOnClickListener(this);
-        mDragControlView.setOnOutSideClickListener(this);
-        createCustomAnimation();
-        RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) fl_content.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
-        WindowManager wManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        linearParams.width = wManager.getDefaultDisplay().getWidth() / 3;// 控件的宽强制设成30
-        fl_content.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
-        manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        fabOnclick();
     }
 
 
@@ -109,6 +142,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         fab5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 fl_content.setVisibility(View.VISIBLE);
+                flBottom.setTranslationX(-200);
                 if (fl_content.getVisibility() == View.VISIBLE) {
                     manager = getSupportFragmentManager();
                     transaction = manager.beginTransaction();
@@ -123,6 +157,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         fab4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 fl_content.setVisibility(View.VISIBLE);
+                flBottom.setTranslationX(-200);
                 if (fl_content.getVisibility() == View.VISIBLE) {
                     manager = getSupportFragmentManager();
                     transaction = manager.beginTransaction();
@@ -139,6 +174,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         {
             public void onClick(View v) {
                 fl_content.setVisibility(View.VISIBLE);
+                flBottom.setTranslationX(-200);
                 if (fl_content.getVisibility() == View.VISIBLE) {
                     manager = getSupportFragmentManager();
                     transaction = manager.beginTransaction();
@@ -155,6 +191,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         {
             public void onClick(View v) {
                 fl_content.setVisibility(View.VISIBLE);
+                flBottom.setTranslationX(-200);
                 if (fl_content.getVisibility() == View.VISIBLE) {
                     manager = getSupportFragmentManager();
                     transaction = manager.beginTransaction();
@@ -171,6 +208,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         {
             public void onClick(View v) {
                 fl_content.setVisibility(View.VISIBLE);
+                flBottom.setTranslationX(-200);
                 if (fl_content.getVisibility() == View.VISIBLE) {
                     manager = getSupportFragmentManager();
                     transaction = manager.beginTransaction();
@@ -212,10 +250,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
 
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
-    }
 
     private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
@@ -239,6 +273,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
                         ? R.mipmap.icon_tools : R.mipmap.icon_up);
                 if (menuFab.isOpened()) {
                     fl_content.setVisibility(View.GONE);
+                    flBottom.setTranslationX(0);
                 }
 
             }
@@ -250,11 +285,6 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
 
         menuFab.setIconToggleAnimatorSet(set);
 
-    }
-
-    @Override
-    public Object newP() {
-        return null;
     }
 
 
@@ -319,9 +349,7 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
      */
     @Override
     public void SendMessageValue(String strValue) {
-        // ToastUtils.showToast(context,"点击了");
         tvBack.performClick();
-
     }
 
     @Override
@@ -329,9 +357,11 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         if (view == tvBack) {
             addDynamicView();
             fl_content.setVisibility(View.GONE);
+            flBottom.setTranslationX(0);
         } else {
             setDragViewAllEnEdit();
             fl_content.setVisibility(View.GONE);
+            flBottom.setTranslationX(0);
         }
         if (view == ivSave) {
             getWindow().getDecorView().setDrawingCacheEnabled(false);
@@ -341,8 +371,8 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
             flBottom.setVisibility(View.VISIBLE);
             rlFab.setVisibility(View.VISIBLE);
         }
-        if(view==ivCamera){
-
+        if (view == ivCamera) {
+            ActionSheet.showSheet(this, this, null);
         }
     }
 
@@ -358,5 +388,81 @@ public class MainActivity extends XActivity implements SceneFragment.CallBackVal
         getWindow().getDecorView().setDrawingCacheEnabled(true);
         Bitmap bmp = getWindow().getDecorView().getDrawingCache();
         return bmp;
+    }
+
+    /**
+     * 拍照相册
+     */
+    String[] takePhotoPerms = {READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, CAMERA};
+    String[] selectPhotoPerms = {READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
+
+    @Override
+    public void onClick(int whichButton) {
+        switch (whichButton) {
+            case ActionSheet.CHOOSE_PICTURE:
+                //相册
+                checkPermission(selectPhotoPerms, 2);
+                break;
+            case ActionSheet.TAKE_PICTURE:
+                //拍照
+                checkPermission(takePhotoPerms, 1);
+                break;
+            case ActionSheet.CANCEL:
+                //取消
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PhotoUtils.getInstance().bindForResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private void checkPermission(String[] perms, int requestCode) {
+        if (EasyPermissions.hasPermissions(this, perms)) {//已经有权限了
+            switch (requestCode) {
+                case 1:
+                    PhotoUtils.getInstance().takePhoto();
+                    break;
+                case 2:
+                    PhotoUtils.getInstance().selectPhoto();
+                    break;
+            }
+        } else {//没有权限去请求
+            EasyPermissions.requestPermissions(this, "权限", requestCode, perms);
+        }
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {//设置成功
+        switch (requestCode) {
+            case 1:
+                PhotoUtils.getInstance().takePhoto();
+                break;
+            case 2:
+                PhotoUtils.getInstance().selectPhoto();
+                break;
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this)
+                    .setTitle("权限设置")
+                    .setPositiveButton("设置")
+                    .setRationale("当前应用缺少必要权限,可能会造成部分功能受影响！请点击\"设置\"-\"权限\"-打开所需权限。最后点击两次后退按钮，即可返回")
+                    .build()
+                    .show();
+        }
     }
 }

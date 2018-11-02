@@ -36,18 +36,18 @@ public class PhotoUtils {
     private File mOutputFile = null;
 
     //剪裁图片宽高比
-    private int mAspectX = 1;
-    private int mAspectY = 1;
+    private int mAspectX = 16;
+    private int mAspectY = 9;
     //剪裁图片大小
-    private int mOutputX = 500;
-    private int mOutputY = 500;
+    private int mOutputX = 1920;
+    private int mOutputY = 1080;
     //身份证剪裁图片宽高比
-    private int mAspectX01 = 9;
-    private int mAspectY01 = 16;
+    private int mAspectX01 = 16;
+    private int mAspectY01 = 9;
     //身份证剪裁图片大小
 
-    private int mOutputX01 = 1080   ;
-    private int mOutputY01 = 1920;
+    private int mOutputX01 = 1920   ;
+    private int mOutputY01 = 1080;
     OnSelectListener mListener;
 
     private static class Holder {
@@ -160,12 +160,12 @@ public class PhotoUtils {
         }
 
         intent.putExtra("crop", "true");
-        //设置剪裁框宽高比
-        intent.putExtra("aspectX", mAspectX);
-        intent.putExtra("aspectY", mAspectY);
-        //设置剪裁图片大小(图片质量的大小)
-        intent.putExtra("outputX", mOutputX);
-        intent.putExtra("outputY", mOutputY);
+//        //设置剪裁框宽高比
+//        intent.putExtra("aspectX", mAspectX);
+//        intent.putExtra("aspectY", mAspectY);
+//        //设置剪裁图片大小(图片质量的大小)
+//        intent.putExtra("outputX", mOutputX);
+//        intent.putExtra("outputY", mOutputY);
         // 是否返回uri
         intent.putExtra("return-data", false);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));

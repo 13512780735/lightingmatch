@@ -27,9 +27,12 @@ dependencies {
     implementation rootProject.ext.dependencies["actionsheet"]
     implementation rootProject.ext.dependencies["easypermissions"]
     implementation rootProject.ext.dependencies["avi-loading"]
+    implementation rootProject.ext.dependencies["logger"]
+    implementation rootProject.ext.dependencies["flowlayout"]
+    implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     implementation project(':mvp')
+    implementation project(':searchview')
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["cardview"]
     // implementation rootProject.ext.dependencies["design"]
-    implementation files('libs/AndroidScreenCap.jar')
 }
