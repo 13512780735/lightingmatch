@@ -10,8 +10,7 @@
         android:id="@+id/rl_right"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants">
-
+       >
 
 
         <TextView
@@ -103,7 +102,6 @@
                     android:id="@+id/fab_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:src="@mipmap/icon_help"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -114,7 +112,6 @@
                     android:id="@+id/fab_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:src="@mipmap/icon_history"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -136,7 +133,6 @@
                     android:id="@+id/fab_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:src="@mipmap/icon_lights"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
@@ -147,7 +143,6 @@
                     android:id="@+id/fab_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:src="@mipmap/icon_scene"
                     fab:fab_colorNormal="#00000000"
                     fab:fab_colorPressed="#00000000"
