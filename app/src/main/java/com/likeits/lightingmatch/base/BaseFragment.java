@@ -42,6 +42,7 @@ public abstract class BaseFragment extends Fragment {
         view = inflater.inflate(setContentView(), container, false);
         isInit = true;
         /**初始化的时候去加载数据**/
+        unbinder = ButterKnife.bind(this, view);
 //        token= SharedPreferencesUtils.getString(getActivity(),"token");
 //        loaddingDialog=new LoaddingDialog(getActivity());
         isCanLoadData();
@@ -219,6 +220,7 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         isInit = false;
         isLoad = false;
+        unbinder.unbind();
     }
 
     protected void showToast(String message) {

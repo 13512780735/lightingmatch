@@ -3,13 +3,20 @@ package com.likeits.lightingmatch.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.likeits.lightingmatch.R;
 import com.likeits.lightingmatch.base.BaseFragment;
 import com.likeits.lightingmatch.interfac.onDataLightsListener;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
+
+import java.util.Set;
 
 import scut.carson_ho.searchview.ICallBack;
 import scut.carson_ho.searchview.SearchView;
@@ -20,7 +27,10 @@ import scut.carson_ho.searchview.SearchView;
 public class SceneFragment extends BaseFragment {
 
     private onDataLightsListener listener;
-    private SearchView searchView;
+
+    private TagFlowLayout mFlowLayout;
+    private String[] mVals = new String[]{"全部风格", "古典", "简约现代", "中式风格"};
+    private TagAdapter<String> adapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -37,20 +47,34 @@ public class SceneFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        searchView = (SearchView) findViewById(R.id.search_view);
-        searchView.setOnClickSearch(new ICallBack() {
+        final LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        mFlowLayout = findViewById(R.id.id_flowlayout);  adapter = new TagAdapter<String>(mVals) {
             @Override
-            public void SearchAciton(String string) {
-               // System.out.println("我收到了" + string);
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView tv = (TextView) mInflater.inflate(R.layout.flowlayout_tv,
+                        mFlowLayout, false);
+                tv.setText(s);
+                return tv;
+            }
+        };
+        mFlowLayout.setAdapter(adapter);
+        mFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                // Toast.makeText(getActivity(), mVals[position], Toast.LENGTH_SHORT).show();
+                //view.setVisibility(View.GONE);
+                return true;
             }
         });
-//        tv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(),"点击了",Toast.LENGTH_SHORT).show();
-//                listener.SendMessageValue("1");
-//            }
-//        });
+
+
+        mFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                getActivity().setTitle("choose:" + selectPosSet.toString());
+            }
+        });
+        adapter.setSelectedList(1);
     }
 
 }

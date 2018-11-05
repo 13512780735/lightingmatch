@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:background="#95000000"
     android:orientation="vertical"
     tools:context="com.likeits.lightingmatch.fragment.SceneFragment">
@@ -27,7 +27,7 @@
            android:background="@drawable/circle_corner_button_selector"
            android:button="@null"
            android:gravity="center"
-           android:text="灯饰类别"
+           android:text="适合风格"
            android:checked="true"
            android:textSize="@dimen/txt_11"
            android:textColor="@color/radiobutton_textcolor"
@@ -57,22 +57,19 @@
            android:background="@drawable/circle_corner_button_selector"
            android:button="@null"
            android:gravity="center"
-           android:text="适合风格"
+           android:text=""
+           android:visibility="invisible"
            android:drawableRight="@drawable/circle_corner_image_selector"
            android:textColor="@color/radiobutton_textcolor"
            />
 
    </RadioGroup>
-    <scut.carson_ho.searchview.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:textSizeSearch="5dp"
-        app:textColorSearch="#9b9b9b"
-        android:layout_marginRight="@dimen/dip_normal"
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/id_flowlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/width35"
         android:layout_marginLeft="@dimen/dip_normal"
-        app:textHintSearch="输入查询关键字"
-        app:searchBlockHeight="150"
-        app:searchBlockColor="#ffffff"
-        />
+        android:layout_marginRight="@dimen/dip_normal"
+        zhy:max_select="1"
+        ></com.zhy.view.flowlayout.TagFlowLayout>
 </LinearLayout>

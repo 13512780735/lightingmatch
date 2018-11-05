@@ -55,7 +55,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends AppCompatActivity implements onDataLightsListener, DragDynamicView.OnOutSideClickListener, View.OnClickListener , ActionSheet.OnActionSheetSelected, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends AppCompatActivity implements onDataLightsListener, DragDynamicView.OnOutSideClickListener, View.OnClickListener, ActionSheet.OnActionSheetSelected, EasyPermissions.PermissionCallbacks {
     @BindView(R.id.fr_screen)
     FrameLayout frScreen;
     @BindView(R.id.rl_fab)
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
         createCustomAnimation();
         RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) fl_content.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
         WindowManager wManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        linearParams.width = wManager.getDefaultDisplay().getWidth() / 3+80;// 控件的宽强制设成30
+        linearParams.width = wManager.getDefaultDisplay().getWidth() / 3 + 80;// 控件的宽强制设成30
         fl_content.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
                 // 4、当拍照或从图库选取图片成功后回调
                 // mTvPath.setText(outputFile.getAbsolutePath());
                 frScreen.setBackgroundDrawable(Drawable.createFromPath(outputUri.getPath()));
-               // frScreen.setBackground(getResources().getDrawable(R.mipmap.icon_scene_background01));
+                // frScreen.setBackground(getResources().getDrawable(R.mipmap.icon_scene_background01));
                 Logger.d("点击执行");
             }
         });
@@ -342,15 +342,6 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
         }
     }
 
-    /**
-     * 灯饰回调
-     *
-     * @param strValue
-     */
-    @Override
-    public void SendMessageValue(String strValue) {
-        tvBack.performClick();
-    }
 
     @Override
     public void onClick(View view) {
@@ -465,4 +456,15 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
                     .show();
         }
     }
+
+    /**
+     * 灯饰回调
+     *
+     * @param strValue
+     */
+    @Override
+    public void SendMessageValue(String strValue) {
+        tvBack.performClick();
+    }
+
 }
