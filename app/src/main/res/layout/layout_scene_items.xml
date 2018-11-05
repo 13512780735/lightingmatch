@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="fill_parent"
-        android:src="@mipmap/icon_ceiling_lamp01"
+        android:src="@mipmap/icon_scene_background"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:layout_height="wrap_content" />

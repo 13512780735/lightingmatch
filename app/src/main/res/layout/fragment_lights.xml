@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="灯饰类别"
             android:textColor="@color/radiobutton_textcolor"
-            android:textSize="@dimen/txt_11" />
+            android:textSize="@dimen/txt_10" />
 
         <RadioButton
             android:id="@+id/btn2"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="适合房型"
             android:textColor="@color/radiobutton_textcolor"
-            android:textSize="@dimen/txt_11" />
+            android:textSize="@dimen/txt_10" />
 
         <RadioButton
             android:id="@+id/btn3"
@@ -58,7 +58,7 @@
             android:gravity="center"
             android:text="适合风格"
             android:textColor="@color/radiobutton_textcolor"
-            android:textSize="@dimen/txt_11" />
+            android:textSize="@dimen/txt_10" />
 
     </RadioGroup>
     <com.likeits.lightingmatch.view.ClearEditText
@@ -73,7 +73,7 @@
         android:background="@drawable/search_background"
         android:textColorHint="@color/color_white"
         android:singleLine="true"
-        android:textSize="@dimen/txt_12"
+        android:textSize="@dimen/txt_11"
         android:imeOptions="flagNoExtractUi"
         android:gravity="start|center_vertical"
         android:hint="输入搜索关键字"/>
@@ -88,7 +88,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/SwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/txt_20"
+        android:layout_marginTop="@dimen/dip_normal"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
