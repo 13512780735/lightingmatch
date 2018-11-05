@@ -39,7 +39,7 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
      */
     private void init() {
         clearDrawable = getResources().getDrawable(R.drawable.clear);
-        searchDrawable = getResources().getDrawable(R.drawable.search);
+        searchDrawable = getResources().getDrawable(R.drawable.icon_search);
 
         setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null,
                 null, null);

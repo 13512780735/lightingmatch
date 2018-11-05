@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/search_block"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingRight="10dp"
         >
@@ -25,9 +25,10 @@
             android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="264"
-            android:background="@null"
-            android:drawableLeft="@drawable/search"
+            android:layout_weight="1"
+            android:textColorHint="#ffffff"
+            android:background="@drawable/search_background"
+            android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="8dp"
             android:gravity="start|center_vertical"
             android:imeOptions="actionSearch"
@@ -38,6 +39,7 @@
 
     <ScrollView
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <LinearLayout
