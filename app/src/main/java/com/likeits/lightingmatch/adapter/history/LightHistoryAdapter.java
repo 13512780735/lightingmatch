@@ -22,13 +22,7 @@ public class LightHistoryAdapter extends BaseQuickAdapter<CaseEntity, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, CaseEntity item) {
-        WindowManager wm = (WindowManager) mContext
-                .getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
         baseViewHolder.setText(R.id.tv_test, item.getId());
 //        ImageView ivPic = baseViewHolder.getView(R.id.iv_pic);
-//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ivPic.getLayoutParams();
-//        params.width = width / 2 - 20;
-//        ivPic.setLayoutParams(params);
     }
 }

@@ -19,6 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true" />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/dip_normal"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_back"/>
 
         <com.likeits.lightingmatch.view.uilib.DragDynamicView
             android:id="@+id/drag_control_layout"

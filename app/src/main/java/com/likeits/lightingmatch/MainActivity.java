@@ -30,10 +30,12 @@ import com.guoqi.actionsheet.ActionSheet;
 import com.likeits.lightingmatch.fragment.CartFragment;
 import com.likeits.lightingmatch.fragment.HelpFragment;
 import com.likeits.lightingmatch.fragment.HistoryFragment;
+import com.likeits.lightingmatch.fragment.LightsDetailsFragment;
 import com.likeits.lightingmatch.fragment.LightsFragment;
 import com.likeits.lightingmatch.fragment.SceneFragment;
 import com.likeits.lightingmatch.fragment.ShotScreenFragment;
 import com.likeits.lightingmatch.interfac.onDataLightsListener;
+import com.likeits.lightingmatch.interfac.onDataSceneListener;
 import com.likeits.lightingmatch.utils.photo.PhotoUtils;
 import com.likeits.lightingmatch.view.uilib.CenterView;
 import com.likeits.lightingmatch.view.uilib.CloseImageView;
@@ -55,7 +57,8 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends AppCompatActivity implements onDataLightsListener, DragDynamicView.OnOutSideClickListener, View.OnClickListener, ActionSheet.OnActionSheetSelected, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends AppCompatActivity implements onDataLightsListener, DragDynamicView.OnOutSideClickListener, View.OnClickListener, ActionSheet.OnActionSheetSelected, EasyPermissions.PermissionCallbacks
+        , onDataSceneListener {
     @BindView(R.id.fr_screen)
     FrameLayout frScreen;
     @BindView(R.id.rl_fab)
@@ -84,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
     ImageView ivSave;
     @BindView(R.id.iv_camera)
     ImageView ivCamera;
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
     @BindView(R.id.frameLayout_bottom)
     RelativeLayout flBottom;
 
@@ -95,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
     private CartFragment cartFragment;
     private HistoryFragment historyFragment;
     private HelpFragment helpFragment;
+    private String flag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -320,6 +326,14 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
 
             }
         });
+        centerImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDetails();
+
+                return true;
+            }
+        });
         centerView.setIsEdit(true);
         centerView.setBitmap(null);
         centerImageView.setImageResource(R.mipmap.icon_ceiling_lamp01);
@@ -328,6 +342,11 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
         mDragControlView.addView(centerView);
         mDragControlView.addView(closeView);
         mDragControlView.addView(dragView);
+    }
+
+    private void showDetails() {
+        LightsDetailsFragment lightsDetailsFragment = new LightsDetailsFragment();
+        lightsDetailsFragment.show(getSupportFragmentManager(), "light");
     }
 
     private void setDragViewAllEnEdit() {
@@ -358,9 +377,11 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
             getWindow().getDecorView().setDrawingCacheEnabled(false);
             flBottom.setVisibility(View.GONE);
             rlFab.setVisibility(View.GONE);
+            iv_back.setVisibility(View.GONE);
             showDialog(captureScreen());
             flBottom.setVisibility(View.VISIBLE);
             rlFab.setVisibility(View.VISIBLE);
+            iv_back.setVisibility(View.VISIBLE);
         }
         if (view == ivCamera) {
             ActionSheet.showSheet(this, this, null);
@@ -463,8 +484,21 @@ public class MainActivity extends AppCompatActivity implements onDataLightsListe
      * @param strValue
      */
     @Override
-    public void SendMessageValue(String strValue) {
+    public void SendLightsValue(String strValue) {
+        flag = strValue;
         tvBack.performClick();
     }
 
+    /**
+     * 场景返回
+     *
+     * @param data
+     */
+    @Override
+    public void SendScencValue(String data) {
+        flag = data;
+        frScreen.setBackground(getResources().getDrawable(R.mipmap.icon_scene_background01));
+        fl_content.setVisibility(View.GONE);
+        flBottom.setTranslationX(0);
+    }
 }

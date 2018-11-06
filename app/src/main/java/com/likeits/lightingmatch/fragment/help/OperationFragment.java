@@ -37,7 +37,7 @@ public class OperationFragment extends BaseFragment {
         findView(R.id.tv_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.SendMessageValue("1");
+              //  listener.SendMessageValue("1");
             }
         });
     }
